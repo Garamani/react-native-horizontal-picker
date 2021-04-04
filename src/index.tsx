@@ -15,6 +15,7 @@ export interface HorizontalPickerProps extends ScrollViewProps {
   data: any[],
   renderItem: (item: any, index: number) => ReactNode,
   itemWidth: number,
+  defaultValue: number,
   snapTimeout?: number
   onChange?: (position: number) => void
 };
@@ -144,7 +145,12 @@ export default class HorizontalPicker extends PureComponent<HorizontalPickerProp
       this.scrollToPosition(nextPosition);
     }, snapTimeout);
   }
-
+  componentDidMount() {
+    const x = this.props.defaultValue * this.props.itemWidth;
+    setTimeout(() => {
+      this.refScrollView.current.scrollTo({ x, y: 0, animated: false });
+    }, 1)
+  }
   render() {
     const {
       data,
